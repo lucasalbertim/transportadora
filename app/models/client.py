@@ -1,5 +1,6 @@
 from sqlalchemy import Column, Integer, String, DateTime, Text
 from sqlalchemy.sql import func
+from sqlalchemy.orm import relationship
 from core.database import Base
 
 
@@ -18,3 +19,6 @@ class Client(Base):
     zip_code = Column(String, nullable=False)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+
+    # Relationships
+    trips = relationship("Trip", back_populates="client")

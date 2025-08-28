@@ -43,7 +43,7 @@ class Trip(Base):
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
     
     # Relationships
-    client = relationship("Client", backref="trips")
-    driver = relationship("Driver", backref="trips")
-    vehicle = relationship("Vehicle", backref="trips")
-    route = relationship("Route", backref="trips")
+    client = relationship("Client", back_populates="trips")
+    driver = relationship("Driver", back_populates="trips")
+    vehicle = relationship("Vehicle", back_populates="trips")
+    route = relationship("Route", back_populates="trips")

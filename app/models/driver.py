@@ -1,5 +1,6 @@
 from sqlalchemy import Column, Integer, String, DateTime, Date, Boolean
 from sqlalchemy.sql import func
+from sqlalchemy.orm import relationship
 from core.database import Base
 
 
@@ -16,3 +17,6 @@ class Driver(Base):
     is_active = Column(Boolean, default=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+
+    # Relationships
+    trips = relationship("Trip", back_populates="driver")
