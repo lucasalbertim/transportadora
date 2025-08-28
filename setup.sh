@@ -20,14 +20,19 @@ done
 
 echo "✅ PostgreSQL está pronto!"
 
-# Executar migrações
-echo "📊 Executando migrações do banco..."
-docker compose exec -T app alembic -c alembic.ini upgrade head
+# Criar tabelas diretamente
+echo "📊 Criando tabelas no banco..."
+docker compose exec -T app python -c "
+from core.database import engine
+from models import Base
+Base.metadata.create_all(bind=engine)
+print('Tabelas criadas com sucesso!')
+"
 
 if [ $? -eq 0 ]; then
-    echo "✅ Migrações executadas com sucesso"
+    echo "✅ Tabelas criadas com sucesso"
 else
-    echo "❌ Erro ao executar migrações"
+    echo "❌ Erro ao criar tabelas"
     exit 1
 fi
 
