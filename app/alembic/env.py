@@ -5,11 +5,11 @@ from alembic import context
 import os
 import sys
 
-# Adicionar o diretório raiz ao path
-sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+# Adicionar o diretório atual ao path (onde está a pasta app)
+sys.path.append(os.path.dirname(__file__))
 
-from app.core.database import Base
-from app.models import *  # Importar todos os modelos
+from core.database import Base
+from models import *  # Importar todos os modelos
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
