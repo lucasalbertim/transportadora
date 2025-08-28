@@ -22,7 +22,7 @@ echo "✅ PostgreSQL está pronto!"
 
 # Executar migrações
 echo "📊 Executando migrações do banco..."
-docker-compose exec -T app alembic upgrade head
+docker-compose exec -T app alembic -c alembic.ini upgrade head
 
 if [ $? -eq 0 ]; then
     echo "✅ Migrações executadas com sucesso"
