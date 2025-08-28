@@ -5,6 +5,7 @@ from models.client import Client
 from models.driver import Driver
 from models.vehicle import Vehicle
 from models.route import Route
+from models.maintenance import Maintenance, MaintenanceType
 from datetime import date, datetime, timedelta
 
 
@@ -203,6 +204,60 @@ def seed_routes(db: Session):
     db.commit()
 
 
+def seed_maintenances(db: Session):
+    """Criar manutenções iniciais"""
+    if db.query(Maintenance).count() > 0:
+        return
+    
+    # Buscar veículos existentes
+    vehicles = db.query(Vehicle).all()
+    if not vehicles:
+        return
+    
+    maintenances = [
+        Maintenance(
+            vehicle_id=vehicles[0].id,
+            maintenance_type=MaintenanceType.PREVENTIVE,
+            maintenance_date=date(2024, 1, 15),
+            cost=1500.00,
+            description="Troca de óleo e filtros",
+            observations="Manutenção preventiva realizada conforme cronograma",
+            is_completed=True
+        ),
+        Maintenance(
+            vehicle_id=vehicles[0].id,
+            maintenance_type=MaintenanceType.CORRECTIVE,
+            maintenance_date=date(2024, 2, 10),
+            cost=2500.00,
+            description="Reparo no sistema de freios",
+            observations="Problema identificado durante inspeção",
+            is_completed=True
+        ),
+        Maintenance(
+            vehicle_id=vehicles[1].id if len(vehicles) > 1 else vehicles[0].id,
+            maintenance_type=MaintenanceType.PREVENTIVE,
+            maintenance_date=date(2024, 1, 20),
+            cost=1200.00,
+            description="Revisão geral e alinhamento",
+            observations="Veículo em bom estado geral",
+            is_completed=True
+        ),
+        Maintenance(
+            vehicle_id=vehicles[1].id if len(vehicles) > 1 else vehicles[0].id,
+            maintenance_type=MaintenanceType.PREVENTIVE,
+            maintenance_date=date(2024, 3, 5),
+            cost=800.00,
+            description="Troca de pneus",
+            observations="Pneus desgastados, troca preventiva",
+            is_completed=False
+        )
+    ]
+    
+    for maintenance in maintenances:
+        db.add(maintenance)
+    db.commit()
+
+
 def seed_all_data(db: Session):
     """Executar todos os seeds"""
     print("🌱 Iniciando seed dos dados...")
@@ -221,5 +276,8 @@ def seed_all_data(db: Session):
     
     seed_routes(db)
     print("✅ Rotas criadas")
+    
+    seed_maintenances(db)
+    print("✅ Manutenções criadas")
     
     print("🎉 Seed concluído com sucesso!")

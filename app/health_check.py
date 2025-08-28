@@ -20,7 +20,7 @@ def test_imports():
         return False
     
     try:
-        from models import Base, User, Client, Driver, Vehicle, Route, Trip
+        from models import Base, User, Client, Driver, Vehicle, Route, Trip, Maintenance, MaintenanceType
         print("✅ models - OK")
     except Exception as e:
         print(f"❌ models - ERRO: {e}")
@@ -45,6 +45,20 @@ def test_imports():
         print("✅ utils.seed_data - OK")
     except Exception as e:
         print(f"❌ utils.seed_data - ERRO: {e}")
+        return False
+    
+    try:
+        from services.maintenance import MaintenanceService
+        print("✅ services.maintenance - OK")
+    except Exception as e:
+        print(f"❌ services.maintenance - ERRO: {e}")
+        return False
+    
+    try:
+        from core.celery_app import celery_app
+        print("✅ core.celery_app - OK")
+    except Exception as e:
+        print(f"❌ core.celery_app - ERRO: {e}")
         return False
     
     return True
@@ -79,7 +93,7 @@ def test_tables_exist():
         
         # Verificar se as tabelas existem
         with engine.connect() as conn:
-            tables = ['users', 'clients', 'drivers', 'vehicles', 'routes', 'trips']
+            tables = ['users', 'clients', 'drivers', 'vehicles', 'routes', 'trips', 'maintenances']
             for table in tables:
                 result = conn.execute(text(f"SELECT COUNT(*) FROM {table}"))
                 print(f"✅ Tabela {table} - OK")

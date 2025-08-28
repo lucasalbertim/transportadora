@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from core.config import settings
 from core.database import engine
 from models import Base
-from routes import auth, clients, drivers, vehicles, routes, trips, dashboard
+from routes import auth, clients, drivers, vehicles, routes, trips, dashboard, maintenance, reports
 
 # Criar tabelas
 Base.metadata.create_all(bind=engine)
@@ -33,6 +33,8 @@ app.include_router(vehicles.router, prefix=settings.API_V1_STR)
 app.include_router(routes.router, prefix=settings.API_V1_STR)
 app.include_router(trips.router, prefix=settings.API_V1_STR)
 app.include_router(dashboard.router, prefix=settings.API_V1_STR)
+app.include_router(maintenance.router, prefix=settings.API_V1_STR)
+app.include_router(reports.router, prefix=settings.API_V1_STR)
 
 
 @app.get("/")

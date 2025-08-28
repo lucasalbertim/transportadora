@@ -13,6 +13,11 @@ class TripBase(BaseModel):
     estimated_arrival: datetime
     estimated_fuel_cost: float
     estimated_toll_cost: float
+    actual_fuel_cost: Optional[float] = None
+    actual_toll_cost: Optional[float] = None
+    daily_allowance_cost: Optional[float] = None
+    other_costs: Optional[float] = None
+    freight_revenue: Optional[float] = None
     notes: Optional[str] = None
 
 
@@ -34,6 +39,9 @@ class TripUpdate(BaseModel):
     estimated_toll_cost: Optional[float] = None
     actual_fuel_cost: Optional[float] = None
     actual_toll_cost: Optional[float] = None
+    daily_allowance_cost: Optional[float] = None
+    other_costs: Optional[float] = None
+    freight_revenue: Optional[float] = None
     notes: Optional[str] = None
 
 
@@ -44,6 +52,9 @@ class Trip(TripBase):
     status: TripStatus
     actual_fuel_cost: Optional[float] = None
     actual_toll_cost: Optional[float] = None
+    daily_allowance_cost: Optional[float] = None
+    other_costs: Optional[float] = None
+    freight_revenue: Optional[float] = None
     created_at: datetime
     updated_at: Optional[datetime] = None
 

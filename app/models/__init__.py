@@ -5,6 +5,7 @@ from .driver import Driver
 from .vehicle import Vehicle
 from .route import Route
 from .trip import Trip
+from .maintenance import Maintenance, MaintenanceType
 
 __all__ = [
     "Base",
@@ -13,5 +14,7 @@ __all__ = [
     "Driver",
     "Vehicle",
     "Route",
-    "Trip"
+    "Trip",
+    "Maintenance",
+    "MaintenanceType"
 ]

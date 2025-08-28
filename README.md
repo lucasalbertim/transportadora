@@ -1,6 +1,41 @@
-# 🚛 TMS - Transport Management System
+# 🚛 TMS v2.0 - Transport Management System
 
-Sistema de Gerenciamento de Transporte (TMS) desenvolvido com FastAPI, PostgreSQL e Docker.
+Sistema de Gerenciamento de Transporte (TMS) versão 2.0 desenvolvido com FastAPI, PostgreSQL, Celery e Docker.
+
+## 🆕 **Novidades da Versão 2.0**
+
+### ✨ **Novas Funcionalidades:**
+
+1. **🔧 Manutenção de Veículos**
+   - CRUD completo de manutenções
+   - Tipos: Preventiva e Corretiva
+   - Relatórios de custos por veículo
+   - Controle de status (concluída/pendente)
+
+2. **💰 Gestão Financeira Avançada**
+   - Registro de custos reais (combustível, pedágios, diárias, outros)
+   - Controle de receita (valor do frete)
+   - Cálculo automático de lucratividade
+   - Relatórios financeiros detalhados
+
+3. **📊 Relatórios Avançados**
+   - Geração em background com Celery
+   - Formatos: JSON, Excel, PDF
+   - Filtros por cliente, motorista, período
+   - Status de progresso em tempo real
+
+4. **📈 Dashboard Melhorado**
+   - Gráficos de lucratividade
+   - Ranking de clientes mais rentáveis
+   - Ranking de motoristas mais eficientes
+   - Custos de manutenção vs receita
+
+### 🛠️ **Melhorias Técnicas:**
+- **Celery + Redis** para tarefas em background
+- **Testes unitários** com pytest
+- **Relatórios assíncronos** com progresso
+- **Métricas financeiras** avançadas
+- **API mais robusta** e escalável
 
 ## 🎯 Sobre o Projeto
 
@@ -142,6 +177,20 @@ Acesse: http://localhost:8000/redoc
 - `DELETE /api/v1/trips/{id}` - Deletar viagem
 
 ### Dashboard
+- `GET /api/v1/dashboard` - Dashboard básico
+- `GET /api/v1/reports/dashboard/v2` - Dashboard avançado v2.0
+
+### 🔧 Manutenções (Novo!)
+- `GET /api/v1/maintenance` - Listar manutenções
+- `POST /api/v1/maintenance` - Criar manutenção
+- `GET /api/v1/maintenance/{id}` - Buscar manutenção
+- `PUT /api/v1/maintenance/{id}` - Atualizar manutenção
+- `DELETE /api/v1/maintenance/{id}` - Deletar manutenção
+- `GET /api/v1/maintenance/reports/costs-by-vehicle` - Relatório de custos
+
+### 📊 Relatórios (Novo!)
+- `POST /api/v1/reports/generate` - Solicitar relatório
+- `GET /api/v1/reports/status/{task_id}` - Verificar status
 - `GET /api/v1/dashboard/stats` - Estatísticas gerais
 
 ## 🔧 Desenvolvimento

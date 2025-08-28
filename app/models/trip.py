@@ -33,6 +33,9 @@ class Trip(Base):
     estimated_toll_cost = Column(Float, nullable=False)
     actual_fuel_cost = Column(Float, nullable=True)
     actual_toll_cost = Column(Float, nullable=True)
+    daily_allowance_cost = Column(Float, nullable=True)
+    other_costs = Column(Float, nullable=True)
+    freight_revenue = Column(Float, nullable=True)
     
     notes = Column(Text, nullable=True)
     
