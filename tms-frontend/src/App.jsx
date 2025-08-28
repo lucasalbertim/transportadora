@@ -1,70 +1,53 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import MainLayout from './layouts/MainLayout';
-import Login from './pages/Login';
-import Dashboard from './pages/Dashboard';
-import Clients from './pages/Clients';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { MainLayout } from './layouts/MainLayout'
+import { Login } from './pages/Login'
+import { Dashboard } from './pages/Dashboard'
+import { Clients } from './pages/Clients'
 
 // Create a client
-const queryClient = new QueryClient();
+const queryClient = new QueryClient()
+
+// Placeholder components for other pages
+const PlaceholderPage = ({ title, description }) => (
+  <div className="flex items-center justify-center h-64">
+    <div className="text-center">
+      <h2 className="text-2xl font-bold text-gray-900 mb-2">{title}</h2>
+      <p className="text-gray-600">{description}</p>
+    </div>
+  </div>
+)
 
 function App() {
-  // Simular autenticação (será integrado com contexto de auth)
-  const isAuthenticated = true; // Mudar para false para testar login
-
   return (
     <QueryClientProvider client={queryClient}>
       <Router>
-        <div className="App">
-          <Routes>
-            {/* Rota de login */}
-            <Route 
-              path="/login" 
-              element={isAuthenticated ? <Navigate to="/dashboard" /> : <Login />} 
-            />
-            
-            {/* Rotas protegidas */}
-            <Route 
-              path="/" 
-              element={isAuthenticated ? <MainLayout /> : <Navigate to="/login" />}
-            >
-              <Route index element={<Navigate to="/dashboard" />} />
-              <Route path="dashboard" element={<Dashboard />} />
-              <Route path="clients" element={<Clients />} />
-              
-              {/* Rotas de cadastros */}
-              <Route path="drivers" element={<div className="p-6"><h1 className="text-2xl font-bold">Motoristas</h1><p>Página em desenvolvimento...</p></div>} />
-              <Route path="vehicles" element={<div className="p-6"><h1 className="text-2xl font-bold">Veículos</h1><p>Página em desenvolvimento...</p></div>} />
-              <Route path="routes" element={<div className="p-6"><h1 className="text-2xl font-bold">Rotas</h1><p>Página em desenvolvimento...</p></div>} />
-              
-              {/* Rotas de operação */}
-              <Route path="trips" element={<div className="p-6"><h1 className="text-2xl font-bold">Viagens</h1><p>Página em desenvolvimento...</p></div>} />
-              <Route path="costs" element={<div className="p-6"><h1 className="text-2xl font-bold">Custos</h1><p>Página em desenvolvimento...</p></div>} />
-              
-              {/* Rotas de manutenção */}
-              <Route path="maintenance" element={<div className="p-6"><h1 className="text-2xl font-bold">Manutenção</h1><p>Página em desenvolvimento...</p></div>} />
-              
-              {/* Rotas de relatórios */}
-              <Route path="reports">
-                <Route path="financial" element={<div className="p-6"><h1 className="text-2xl font-bold">Relatórios Financeiros</h1><p>Página em desenvolvimento...</p></div>} />
-                <Route path="operational" element={<div className="p-6"><h1 className="text-2xl font-bold">Relatórios Operacionais</h1><p>Página em desenvolvimento...</p></div>} />
-              </Route>
-              
-              {/* Rotas de configurações */}
-              <Route path="settings">
-                <Route path="users" element={<div className="p-6"><h1 className="text-2xl font-bold">Usuários</h1><p>Página em desenvolvimento...</p></div>} />
-                <Route path="profile" element={<div className="p-6"><h1 className="text-2xl font-bold">Perfil</h1><p>Página em desenvolvimento...</p></div>} />
-              </Route>
+        <Routes>
+          {/* Public routes */}
+          <Route path="/login" element={<Login />} />
+          
+          {/* Protected routes */}
+          <Route path="/" element={<MainLayout />}>
+            <Route index element={<Navigate to="/dashboard" replace />} />
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="clients" element={<Clients />} />
+            <Route path="drivers" element={<PlaceholderPage title="Motoristas" description="Página de gerenciamento de motoristas" />} />
+            <Route path="vehicles" element={<PlaceholderPage title="Veículos" description="Página de gerenciamento de veículos" />} />
+            <Route path="routes" element={<PlaceholderPage title="Rotas" description="Página de gerenciamento de rotas" />} />
+            <Route path="trips" element={<PlaceholderPage title="Viagens" description="Página de gerenciamento de viagens" />} />
+            <Route path="costs" element={<PlaceholderPage title="Custos" description="Página de gerenciamento de custos" />} />
+            <Route path="maintenance" element={<PlaceholderPage title="Manutenção" description="Página de gerenciamento de manutenção" />} />
+            <Route path="reports">
+              <Route path="financial" element={<PlaceholderPage title="Relatórios Financeiros" description="Página de relatórios financeiros" />} />
+              <Route path="operational" element={<PlaceholderPage title="Relatórios Operacionais" description="Página de relatórios operacionais" />} />
             </Route>
-            
-            {/* Rota 404 */}
-            <Route path="*" element={<Navigate to="/dashboard" />} />
-          </Routes>
-        </div>
+            <Route path="users" element={<PlaceholderPage title="Usuários" description="Página de gerenciamento de usuários" />} />
+            <Route path="profile" element={<PlaceholderPage title="Perfil" description="Página de perfil do usuário" />} />
+          </Route>
+        </Routes>
       </Router>
     </QueryClientProvider>
-  );
+  )
 }
 
-export default App;
+export default App

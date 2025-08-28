@@ -1,48 +1,39 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, User, Settings, LogOut, ChevronDown } from 'lucide-react';
-import { Button } from './ui/button';
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Menu, User, Settings, LogOut, ChevronDown } from 'lucide-react'
 
-const Header = ({ onMenuClick }) => {
-  const [userMenuOpen, setUserMenuOpen] = useState(false);
-
-  const toggleUserMenu = () => {
-    setUserMenuOpen(!userMenuOpen);
-  };
+export function Header({ onMenuClick }) {
+  const [userMenuOpen, setUserMenuOpen] = useState(false)
 
   return (
     <header className="bg-white border-b border-gray-200 px-6 py-4">
       <div className="flex items-center justify-between">
-        {/* Left side - Menu button */}
-        <div className="flex items-center">
-          <Button
-            variant="ghost"
-            size="icon"
+        {/* Left side */}
+        <div className="flex items-center space-x-4">
+          <button
             onClick={onMenuClick}
-            className="mr-4"
+            className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
           >
-            <Menu className="h-5 w-5" />
-          </Button>
-          <h1 className="text-xl font-semibold text-gray-900">
-            Sistema TMS
-          </h1>
+            <Menu size={20} />
+          </button>
+          <h1 className="text-xl font-semibold text-gray-900">TMS - Transport Management System</h1>
         </div>
 
         {/* Right side - User menu */}
         <div className="relative">
-          <Button
-            variant="ghost"
-            onClick={toggleUserMenu}
-            className="flex items-center space-x-2"
+          <button
+            onClick={() => setUserMenuOpen(!userMenuOpen)}
+            className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-100 transition-colors"
           >
-            <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
-              <User className="h-4 w-4 text-white" />
+            <div className="w-8 h-8 bg-primary-600 rounded-full flex items-center justify-center">
+              <User size={16} className="text-white" />
             </div>
-            <span className="hidden md:block text-sm font-medium text-gray-700">
-              Admin User
-            </span>
-            <ChevronDown className="h-4 w-4 text-gray-500" />
-          </Button>
+            <div className="text-left">
+              <div className="text-sm font-medium text-gray-900">Admin User</div>
+              <div className="text-xs text-gray-500">admin@tms.com</div>
+            </div>
+            <ChevronDown size={16} className="text-gray-500" />
+          </button>
 
           <AnimatePresence>
             {userMenuOpen && (
@@ -50,31 +41,26 @@ const Header = ({ onMenuClick }) => {
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.2 }}
-                className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg border border-gray-200 z-50"
+                className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50"
               >
-                <div className="py-1">
-                  <button className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                    <User className="h-4 w-4 mr-3" />
-                    Perfil
-                  </button>
-                  <button className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                    <Settings className="h-4 w-4 mr-3" />
-                    Configurações
-                  </button>
-                  <hr className="my-1" />
-                  <button className="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50">
-                    <LogOut className="h-4 w-4 mr-3" />
-                    Sair
-                  </button>
-                </div>
+                <button className="w-full flex items-center space-x-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors">
+                  <User size={16} />
+                  <span>Perfil</span>
+                </button>
+                <button className="w-full flex items-center space-x-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors">
+                  <Settings size={16} />
+                  <span>Configurações</span>
+                </button>
+                <hr className="my-2" />
+                <button className="w-full flex items-center space-x-3 px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors">
+                  <LogOut size={16} />
+                  <span>Sair</span>
+                </button>
               </motion.div>
             )}
           </AnimatePresence>
         </div>
       </div>
     </header>
-  );
-};
-
-export default Header;
+  )
+}
