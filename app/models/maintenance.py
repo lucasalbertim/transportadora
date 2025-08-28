@@ -14,6 +14,7 @@ class Maintenance(Base):
     __tablename__ = "maintenances"
 
     id = Column(Integer, primary_key=True, index=True)
+    tenant_id = Column(Integer, ForeignKey("tenants.id"), nullable=False)
     vehicle_id = Column(Integer, ForeignKey("vehicles.id"), nullable=False)
     maintenance_type = Column(String, nullable=False)  # MaintenanceType
     maintenance_date = Column(Date, nullable=False)
@@ -25,4 +26,5 @@ class Maintenance(Base):
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
 
     # Relationships
+    tenant = relationship("Tenant", back_populates="maintenances")
     vehicle = relationship("Vehicle", back_populates="maintenances")

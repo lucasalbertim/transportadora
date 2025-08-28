@@ -92,8 +92,14 @@ def seed_clients(db: Session):
     if db.query(Client).count() > 0:
         return
     
+    # Buscar tenant padrão
+    default_tenant = db.query(Tenant).filter(Tenant.slug == "default").first()
+    if not default_tenant:
+        return
+    
     clients = [
         Client(
+            tenant_id=default_tenant.id,
             name="Empresa ABC Ltda",
             document="12.345.678/0001-90",
             contact_name="João Silva",
@@ -105,6 +111,7 @@ def seed_clients(db: Session):
             zip_code="01234-567"
         ),
         Client(
+            tenant_id=default_tenant.id,
             name="Comércio XYZ",
             document="98.765.432/0001-10",
             contact_name="Maria Santos",
@@ -116,6 +123,7 @@ def seed_clients(db: Session):
             zip_code="20000-000"
         ),
         Client(
+            tenant_id=default_tenant.id,
             name="Indústria DEF",
             document="11.222.333/0001-44",
             contact_name="Pedro Costa",
@@ -138,8 +146,14 @@ def seed_drivers(db: Session):
     if db.query(Driver).count() > 0:
         return
     
+    # Buscar tenant padrão
+    default_tenant = db.query(Tenant).filter(Tenant.slug == "default").first()
+    if not default_tenant:
+        return
+    
     drivers = [
         Driver(
+            tenant_id=default_tenant.id,
             name="Carlos Oliveira",
             cnh_number="12345678901",
             cnh_expiry=date(2025, 12, 31),
@@ -149,6 +163,7 @@ def seed_drivers(db: Session):
             is_active=True
         ),
         Driver(
+            tenant_id=default_tenant.id,
             name="Roberto Santos",
             cnh_number="98765432109",
             cnh_expiry=date(2024, 6, 30),
@@ -158,6 +173,7 @@ def seed_drivers(db: Session):
             is_active=True
         ),
         Driver(
+            tenant_id=default_tenant.id,
             name="Fernando Lima",
             cnh_number="11122233344",
             cnh_expiry=date(2026, 3, 15),
@@ -178,8 +194,14 @@ def seed_vehicles(db: Session):
     if db.query(Vehicle).count() > 0:
         return
     
+    # Buscar tenant padrão
+    default_tenant = db.query(Tenant).filter(Tenant.slug == "default").first()
+    if not default_tenant:
+        return
+    
     vehicles = [
         Vehicle(
+            tenant_id=default_tenant.id,
             plate="ABC-1234",
             model="FH 460",
             brand="Volvo",
@@ -189,6 +211,7 @@ def seed_vehicles(db: Session):
             is_active=True
         ),
         Vehicle(
+            tenant_id=default_tenant.id,
             plate="XYZ-5678",
             model="Actros 2651",
             brand="Mercedes-Benz",
@@ -198,6 +221,7 @@ def seed_vehicles(db: Session):
             is_active=True
         ),
         Vehicle(
+            tenant_id=default_tenant.id,
             plate="DEF-9012",
             model="Truck 2428",
             brand="Scania",
@@ -218,8 +242,14 @@ def seed_routes(db: Session):
     if db.query(Route).count() > 0:
         return
     
+    # Buscar tenant padrão
+    default_tenant = db.query(Tenant).filter(Tenant.slug == "default").first()
+    if not default_tenant:
+        return
+    
     routes = [
         Route(
+            tenant_id=default_tenant.id,
             name="São Paulo - Rio de Janeiro",
             origin="São Paulo, SP",
             destination="Rio de Janeiro, RJ",
@@ -229,6 +259,7 @@ def seed_routes(db: Session):
             is_active=True
         ),
         Route(
+            tenant_id=default_tenant.id,
             name="São Paulo - Belo Horizonte",
             origin="São Paulo, SP",
             destination="Belo Horizonte, MG",
@@ -238,6 +269,7 @@ def seed_routes(db: Session):
             is_active=True
         ),
         Route(
+            tenant_id=default_tenant.id,
             name="Rio de Janeiro - Belo Horizonte",
             origin="Rio de Janeiro, RJ",
             destination="Belo Horizonte, MG",
@@ -258,13 +290,19 @@ def seed_maintenances(db: Session):
     if db.query(Maintenance).count() > 0:
         return
     
+    # Buscar tenant padrão
+    default_tenant = db.query(Tenant).filter(Tenant.slug == "default").first()
+    if not default_tenant:
+        return
+    
     # Buscar veículos existentes
-    vehicles = db.query(Vehicle).all()
+    vehicles = db.query(Vehicle).filter(Vehicle.tenant_id == default_tenant.id).all()
     if not vehicles:
         return
     
     maintenances = [
         Maintenance(
+            tenant_id=default_tenant.id,
             vehicle_id=vehicles[0].id,
             maintenance_type=MaintenanceType.PREVENTIVE,
             maintenance_date=date(2024, 1, 15),
@@ -274,6 +312,7 @@ def seed_maintenances(db: Session):
             is_completed=True
         ),
         Maintenance(
+            tenant_id=default_tenant.id,
             vehicle_id=vehicles[0].id,
             maintenance_type=MaintenanceType.CORRECTIVE,
             maintenance_date=date(2024, 2, 10),
@@ -283,6 +322,7 @@ def seed_maintenances(db: Session):
             is_completed=True
         ),
         Maintenance(
+            tenant_id=default_tenant.id,
             vehicle_id=vehicles[1].id if len(vehicles) > 1 else vehicles[0].id,
             maintenance_type=MaintenanceType.PREVENTIVE,
             maintenance_date=date(2024, 1, 20),
@@ -292,6 +332,7 @@ def seed_maintenances(db: Session):
             is_completed=True
         ),
         Maintenance(
+            tenant_id=default_tenant.id,
             vehicle_id=vehicles[1].id if len(vehicles) > 1 else vehicles[0].id,
             maintenance_type=MaintenanceType.PREVENTIVE,
             maintenance_date=date(2024, 3, 5),

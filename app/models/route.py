@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, DateTime, Float, Text, Boolean
+from sqlalchemy import Column, Integer, String, DateTime, Float, Text, Boolean, ForeignKey
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
 from core.database import Base
@@ -8,6 +8,7 @@ class Route(Base):
     __tablename__ = "routes"
 
     id = Column(Integer, primary_key=True, index=True)
+    tenant_id = Column(Integer, ForeignKey("tenants.id"), nullable=False)
     name = Column(String, nullable=False)
     origin = Column(String, nullable=False)
     destination = Column(String, nullable=False)
@@ -19,4 +20,5 @@ class Route(Base):
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
 
     # Relationships
+    tenant = relationship("Tenant", back_populates="routes")
     trips = relationship("Trip", back_populates="route")

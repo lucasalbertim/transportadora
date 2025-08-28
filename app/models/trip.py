@@ -16,6 +16,7 @@ class Trip(Base):
     __tablename__ = "trips"
 
     id = Column(Integer, primary_key=True, index=True)
+    tenant_id = Column(Integer, ForeignKey("tenants.id"), nullable=False)
     client_id = Column(Integer, ForeignKey("clients.id"), nullable=False)
     driver_id = Column(Integer, ForeignKey("drivers.id"), nullable=False)
     vehicle_id = Column(Integer, ForeignKey("vehicles.id"), nullable=False)
@@ -43,6 +44,7 @@ class Trip(Base):
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
     
     # Relationships
+    tenant = relationship("Tenant", back_populates="trips")
     client = relationship("Client", back_populates="trips")
     driver = relationship("Driver", back_populates="trips")
     vehicle = relationship("Vehicle", back_populates="trips")
