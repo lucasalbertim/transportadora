@@ -20,6 +20,7 @@ services:
       - ./app:/app
     networks:
       - tms-network
+    restart: unless-stopped
     command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 
   db:
@@ -34,6 +35,7 @@ services:
       - postgres_data:/var/lib/postgresql/data
     networks:
       - tms-network
+    restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U tms_user -d tms_db"]
       interval: 5s
@@ -46,6 +48,7 @@ services:
       - "6379:6379"
     networks:
       - tms-network
+    restart: unless-stopped
 
   pgadmin:
     image: dpage/pgadmin4
@@ -58,6 +61,7 @@ services:
       - db
     networks:
       - tms-network
+    restart: unless-stopped
 
 volumes:
   postgres_data:

@@ -1,9 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from .core.config import settings
-from .core.database import engine
-from .models import Base
-from .routes import auth, clients, drivers, vehicles, routes, trips, dashboard
+from core.config import settings
+from core.database import engine
+from models import Base
+from routes import auth, clients, drivers, vehicles, routes, trips, dashboard
 
 # Criar tabelas
 Base.metadata.create_all(bind=engine)

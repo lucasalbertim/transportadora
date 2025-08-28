@@ -23,6 +23,8 @@ echo "✅ PostgreSQL está pronto!"
 # Criar tabelas diretamente
 echo "📊 Criando tabelas no banco..."
 docker compose exec -T app python -c "
+import sys
+sys.path.append('/app')
 from core.database import engine
 from models import Base
 Base.metadata.create_all(bind=engine)
@@ -44,6 +46,17 @@ if [ $? -eq 0 ]; then
     echo "✅ Seed executado com sucesso"
 else
     echo "❌ Erro ao executar seed"
+    exit 1
+fi
+
+# Verificação de saúde
+echo "🔍 Executando verificação de saúde..."
+docker compose exec -T app python health_check.py
+
+if [ $? -eq 0 ]; then
+    echo "✅ Verificação de saúde passou"
+else
+    echo "❌ Verificação de saúde falhou"
     exit 1
 fi
 

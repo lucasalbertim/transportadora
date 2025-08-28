@@ -17,6 +17,10 @@ COPY ./app .
 
 # Create non-root user
 RUN useradd -m -u 1000 appuser && chown -R appuser:appuser /app
+
+# Set proper permissions
+RUN chmod +x /app/seed_database.py
+
 USER appuser
 
 # Expose port
