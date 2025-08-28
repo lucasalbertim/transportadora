@@ -1,9 +1,18 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, User, Settings, LogOut, ChevronDown } from 'lucide-react'
+import { useAuth } from '../contexts/AuthContext'
 
 export function Header({ onMenuClick }) {
   const [userMenuOpen, setUserMenuOpen] = useState(false)
+  const { user, logout } = useAuth()
+  const navigate = useNavigate()
+
+  const handleLogout = () => {
+    logout()
+    navigate('/login')
+  }
 
   return (
     <header className="bg-white border-b border-gray-200 px-6 py-4">
@@ -29,8 +38,8 @@ export function Header({ onMenuClick }) {
               <User size={16} className="text-white" />
             </div>
             <div className="text-left">
-              <div className="text-sm font-medium text-gray-900">Admin User</div>
-              <div className="text-xs text-gray-500">admin@tms.com</div>
+              <div className="text-sm font-medium text-gray-900">{user?.name || user?.username || 'Usuário'}</div>
+              <div className="text-xs text-gray-500">{user?.email || 'admin@tms.com'}</div>
             </div>
             <ChevronDown size={16} className="text-gray-500" />
           </button>
@@ -52,7 +61,10 @@ export function Header({ onMenuClick }) {
                   <span>Configurações</span>
                 </button>
                 <hr className="my-2" />
-                <button className="w-full flex items-center space-x-3 px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors">
+                <button 
+                  className="w-full flex items-center space-x-3 px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"
+                  onClick={handleLogout}
+                >
                   <LogOut size={16} />
                   <span>Sair</span>
                 </button>

@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { 
   Users, 
@@ -11,89 +12,134 @@ import {
 } from 'lucide-react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts'
-
-// Dados mockados
-const statsData = [
-  {
-    title: 'Total de Viagens',
-    value: '1,234',
-    change: '+12%',
-    changeType: 'positive',
-    icon: Route,
-    color: 'bg-blue-500'
-  },
-  {
-    title: 'Clientes Ativos',
-    value: '89',
-    change: '+5%',
-    changeType: 'positive',
-    icon: Users,
-    color: 'bg-green-500'
-  },
-  {
-    title: 'Veículos Ativos',
-    value: '45',
-    change: '-2%',
-    changeType: 'negative',
-    icon: Truck,
-    color: 'bg-purple-500'
-  },
-  {
-    title: 'Receita Mensal',
-    value: 'R$ 125.000',
-    change: '+18%',
-    changeType: 'positive',
-    icon: DollarSign,
-    color: 'bg-orange-500'
-  }
-]
-
-const revenueData = [
-  { name: 'Jan', receita: 4000, custos: 2400 },
-  { name: 'Fev', receita: 3000, custos: 1398 },
-  { name: 'Mar', receita: 2000, custos: 9800 },
-  { name: 'Abr', receita: 2780, custos: 3908 },
-  { name: 'Mai', receita: 1890, custos: 4800 },
-  { name: 'Jun', receita: 2390, custos: 3800 },
-]
-
-const tripStatusData = [
-  { name: 'Concluídas', value: 65, color: '#10B981' },
-  { name: 'Em Trânsito', value: 25, color: '#3B82F6' },
-  { name: 'Pendentes', value: 10, color: '#F59E0B' },
-]
-
-const recentTrips = [
-  {
-    id: 1,
-    client: 'Empresa ABC Ltda',
-    origin: 'São Paulo, SP',
-    destination: 'Rio de Janeiro, RJ',
-    status: 'Em Trânsito',
-    date: '2024-01-15',
-    value: 'R$ 2.500'
-  },
-  {
-    id: 2,
-    client: 'Comércio XYZ',
-    origin: 'Belo Horizonte, MG',
-    destination: 'Brasília, DF',
-    status: 'Concluída',
-    date: '2024-01-14',
-    value: 'R$ 1.800'
-  },
-  {
-    id: 3,
-    client: 'Indústria 123',
-    origin: 'Curitiba, PR',
-    destination: 'Porto Alegre, RS',
-    status: 'Pendente',
-    date: '2024-01-16',
-    value: 'R$ 3.200'
-  }
-]
+import { dashboardService } from '../services/api'
 
 export function Dashboard() {
+  const [stats, setStats] = useState(null)
+  const [recentTrips, setRecentTrips] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    loadDashboardData()
+  }, [])
+
+  const loadDashboardData = async () => {
+    try {
+      setLoading(true)
+      const [statsData, tripsData] = await Promise.all([
+        dashboardService.getStats(),
+        dashboardService.getRecentTrips()
+      ])
+      
+      setStats(statsData)
+      setRecentTrips(tripsData)
+    } catch (error) {
+      console.error('Erro ao carregar dados do dashboard:', error)
+      // Usar dados mockados em caso de erro
+      setStats({
+        total_trips: 1234,
+        total_clients: 89,
+        total_vehicles: 45,
+        total_revenue: 125000,
+        trips_completed: 65,
+        trips_in_transit: 25,
+        trips_pending: 10
+      })
+      setRecentTrips([
+        {
+          id: 1,
+          client_name: 'Empresa ABC Ltda',
+          origin: 'São Paulo, SP',
+          destination: 'Rio de Janeiro, RJ',
+          status: 'Em Trânsito',
+          departure_date: '2024-01-15',
+          freight_value: 2500
+        },
+        {
+          id: 2,
+          client_name: 'Comércio XYZ',
+          origin: 'Belo Horizonte, MG',
+          destination: 'Brasília, DF',
+          status: 'Concluída',
+          departure_date: '2024-01-14',
+          freight_value: 1800
+        },
+        {
+          id: 3,
+          client_name: 'Indústria 123',
+          origin: 'Curitiba, PR',
+          destination: 'Porto Alegre, RS',
+          status: 'Pendente',
+          departure_date: '2024-01-16',
+          freight_value: 3200
+        }
+      ])
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Carregando dashboard...</p>
+        </div>
+      </div>
+    )
+  }
+
+  const statsData = [
+    {
+      title: 'Total de Viagens',
+      value: stats?.total_trips?.toLocaleString() || '0',
+      change: '+12%',
+      changeType: 'positive',
+      icon: Route,
+      color: 'bg-blue-500'
+    },
+    {
+      title: 'Clientes Ativos',
+      value: stats?.total_clients?.toString() || '0',
+      change: '+5%',
+      changeType: 'positive',
+      icon: Users,
+      color: 'bg-green-500'
+    },
+    {
+      title: 'Veículos Ativos',
+      value: stats?.total_vehicles?.toString() || '0',
+      change: '-2%',
+      changeType: 'negative',
+      icon: Truck,
+      color: 'bg-purple-500'
+    },
+    {
+      title: 'Receita Mensal',
+      value: `R$ ${stats?.total_revenue?.toLocaleString() || '0'}`,
+      change: '+18%',
+      changeType: 'positive',
+      icon: DollarSign,
+      color: 'bg-orange-500'
+    }
+  ]
+
+  const tripStatusData = [
+    { name: 'Concluídas', value: stats?.trips_completed || 0, color: '#10B981' },
+    { name: 'Em Trânsito', value: stats?.trips_in_transit || 0, color: '#3B82F6' },
+    { name: 'Pendentes', value: stats?.trips_pending || 0, color: '#F59E0B' },
+  ]
+
+  const revenueData = [
+    { name: 'Jan', receita: 4000, custos: 2400 },
+    { name: 'Fev', receita: 3000, custos: 1398 },
+    { name: 'Mar', receita: 2000, custos: 9800 },
+    { name: 'Abr', receita: 2780, custos: 3908 },
+    { name: 'Mai', receita: 1890, custos: 4800 },
+    { name: 'Jun', receita: 2390, custos: 3800 },
+  ]
+
   return (
     <div className="space-y-6">
       <motion.div
@@ -228,7 +274,7 @@ export function Dashboard() {
                       <Route size={20} className="text-primary-600" />
                     </div>
                     <div>
-                      <p className="font-medium text-gray-900">{trip.client}</p>
+                      <p className="font-medium text-gray-900">{trip.client_name}</p>
                       <div className="flex items-center space-x-2 text-sm text-gray-500">
                         <MapPin size={14} />
                         <span>{trip.origin} → {trip.destination}</span>
@@ -243,8 +289,8 @@ export function Dashboard() {
                     }`}>
                       {trip.status}
                     </div>
-                    <p className="text-sm font-medium text-gray-900 mt-1">{trip.value}</p>
-                    <p className="text-xs text-gray-500">{trip.date}</p>
+                    <p className="text-sm font-medium text-gray-900 mt-1">R$ {trip.freight_value?.toLocaleString() || '0'}</p>
+                    <p className="text-xs text-gray-500">{trip.departure_date}</p>
                   </div>
                 </div>
               ))}

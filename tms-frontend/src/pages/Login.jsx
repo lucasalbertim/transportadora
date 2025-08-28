@@ -1,23 +1,41 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Eye, EyeOff, Truck } from 'lucide-react'
 import { Button } from '../components/ui/button'
 import { Input } from '../components/ui/input'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card'
+import { useAuth } from '../contexts/AuthContext'
 
 export function Login() {
   const [showPassword, setShowPassword] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [formData, setFormData] = useState({
+    username: '',
+    password: ''
+  })
+  
+  const { login, error } = useAuth()
+  const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
     
-    // Simular login
-    setTimeout(() => {
-      setLoading(false)
-      // Aqui seria a integração com a API
-    }, 1000)
+    const result = await login(formData.username, formData.password)
+    
+    if (result.success) {
+      navigate('/dashboard')
+    }
+    
+    setLoading(false)
+  }
+
+  const handleInputChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    })
   }
 
   return (
@@ -40,15 +58,24 @@ export function Login() {
           </CardHeader>
           
           <CardContent>
+            {error && (
+              <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-lg text-sm">
+                {error}
+              </div>
+            )}
+            
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                  Email
+                <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-1">
+                  Usuário
                 </label>
                 <Input
-                  id="email"
-                  type="email"
-                  placeholder="seu@email.com"
+                  id="username"
+                  name="username"
+                  type="text"
+                  placeholder="Digite seu usuário"
+                  value={formData.username}
+                  onChange={handleInputChange}
                   required
                 />
               </div>
@@ -60,8 +87,11 @@ export function Login() {
                 <div className="relative">
                   <Input
                     id="password"
+                    name="password"
                     type={showPassword ? 'text' : 'password'}
                     placeholder="••••••••"
+                    value={formData.password}
+                    onChange={handleInputChange}
                     required
                   />
                   <button
@@ -85,10 +115,7 @@ export function Login() {
             
             <div className="mt-6 text-center">
               <p className="text-sm text-gray-600">
-                Esqueceu sua senha?{' '}
-                <a href="#" className="text-primary-600 hover:text-primary-700 font-medium">
-                  Recuperar senha
-                </a>
+                Credenciais de teste: admin / admin123
               </p>
             </div>
           </CardContent>
