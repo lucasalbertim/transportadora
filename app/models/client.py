@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, DateTime, Text
+from sqlalchemy import Column, Integer, String, DateTime, Text, ForeignKey
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
 from core.database import Base
@@ -8,8 +8,9 @@ class Client(Base):
     __tablename__ = "clients"
 
     id = Column(Integer, primary_key=True, index=True)
+    tenant_id = Column(Integer, ForeignKey("tenants.id"), nullable=False)
     name = Column(String, nullable=False)
-    document = Column(String, unique=True, index=True, nullable=False)  # CNPJ/CPF
+    document = Column(String, index=True, nullable=False)  # CNPJ/CPF - removido unique para multi-tenant
     contact_name = Column(String, nullable=False)
     phone = Column(String, nullable=False)
     email = Column(String, nullable=True)
@@ -21,4 +22,5 @@ class Client(Base):
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
 
     # Relationships
+    tenant = relationship("Tenant", back_populates="clients")
     trips = relationship("Trip", back_populates="client")

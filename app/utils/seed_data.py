@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
 from core.security import get_password_hash
 from models.user import User, UserRole
+from models.tenant import Tenant
 from models.client import Client
 from models.driver import Driver
 from models.vehicle import Vehicle
@@ -9,14 +10,61 @@ from models.maintenance import Maintenance, MaintenanceType
 from datetime import date, datetime, timedelta
 
 
+def seed_tenants(db: Session):
+    """Criar tenants iniciais"""
+    if db.query(Tenant).count() > 0:
+        return
+    
+    # Tenant padrão
+    default_tenant = Tenant(
+        name="Transportadora Padrão",
+        slug="default",
+        company_name="Transportadora Padrão Ltda",
+        cnpj="12.345.678/0001-90",
+        address="Rua das Transportadoras, 123",
+        phone="(11) 99999-9999",
+        email="contato@transportadorapadrao.com",
+        max_users=50,
+        max_vehicles=100,
+        is_trial=False
+    )
+    
+    # Tenant de exemplo
+    example_tenant = Tenant(
+        name="Logística Express",
+        slug="logistica-express",
+        company_name="Logística Express Ltda",
+        cnpj="98.765.432/0001-10",
+        address="Av. Logística, 456",
+        phone="(21) 88888-8888",
+        email="contato@logisticaexpress.com",
+        max_users=20,
+        max_vehicles=50,
+        is_trial=True,
+        trial_ends_at=datetime.now() + timedelta(days=30)
+    )
+    
+    db.add(default_tenant)
+    db.add(example_tenant)
+    db.commit()
+    
+    return default_tenant, example_tenant
+
+
 def seed_users(db: Session):
     """Criar usuários iniciais"""
     # Verificar se já existem usuários
     if db.query(User).count() > 0:
         return
     
+    # Buscar tenants
+    default_tenant = db.query(Tenant).filter(Tenant.slug == "default").first()
+    if not default_tenant:
+        return
+    
     # Admin
     admin_user = User(
+        tenant_id=default_tenant.id,
         email="admin@tms.com",
         username="admin",
         hashed_password=get_password_hash("admin123"),
@@ -26,6 +74,7 @@ def seed_users(db: Session):
     
     # Operador
     operator_user = User(
+        tenant_id=default_tenant.id,
         email="operador@tms.com",
         username="operador",
         hashed_password=get_password_hash("operador123"),
@@ -261,6 +310,9 @@ def seed_maintenances(db: Session):
 def seed_all_data(db: Session):
     """Executar todos os seeds"""
     print("🌱 Iniciando seed dos dados...")
+    
+    seed_tenants(db)
+    print("✅ Tenants criados")
     
     seed_users(db)
     print("✅ Usuários criados")

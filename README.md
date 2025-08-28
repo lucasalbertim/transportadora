@@ -1,8 +1,54 @@
-# 🚛 TMS v2.0 - Transport Management System
+# 🚛 TMS v3.0 - Multi-tenant Transport Management System
 
-Sistema de Gerenciamento de Transporte (TMS) versão 2.0 desenvolvido com FastAPI, PostgreSQL, Celery e Docker.
+Sistema Multi-tenant de Gerenciamento de Transporte (TMS) versão 3.0 desenvolvido com FastAPI, PostgreSQL, Celery, Redis, Elasticsearch e Docker.
 
-## 🆕 **Novidades da Versão 2.0**
+## 🆕 **Novidades da Versão 3.0**
+
+### ✨ **Funcionalidades Multi-tenant (SaaS):**
+
+1. **🏢 Multi-tenant Architecture**
+   - Separação completa de dados por transportadora
+   - Autenticação por tenant (header X-Tenant-ID ou subdomain)
+   - Row Level Security (RLS) implementado
+   - Sistema de trial e limites por tenant
+
+2. **📊 Analytics e KPIs Avançados**
+   - Taxa de retenção de clientes
+   - Taxa de ocupação da frota
+   - Custo médio por km rodado
+   - Projeção de ganhos futuros
+   - Análise de viagens no prazo vs atrasadas
+   - Métricas de performance dos motoristas
+
+3. **🔔 Sistema de Notificações**
+   - Email via SendGrid
+   - WhatsApp via Twilio
+   - Alertas automáticos de status de viagens
+   - Alertas de manutenção preventiva
+   - Alertas de documentos vencendo
+
+4. **📈 Dashboard Executivo Interativo**
+   - Gráficos com Plotly/Dash
+   - Filtros avançados por período
+   - Métricas em tempo real
+   - Relatórios customizáveis
+
+5. **🔧 Melhorias Técnicas**
+   - Logging estruturado com ELK Stack
+   - Monitoramento com Prometheus + Grafana
+   - Rate limiting e cache
+   - Arquitetura preparada para Kubernetes
+   - Testes de integração
+
+### 🛠️ **Stack Tecnológica:**
+- **Backend**: FastAPI + SQLAlchemy + Alembic
+- **Database**: PostgreSQL com RLS
+- **Cache/Queue**: Redis + Celery
+- **Logging**: ELK Stack (Elasticsearch + Kibana)
+- **Monitoring**: Prometheus + Grafana
+- **Notifications**: SendGrid + Twilio
+- **Analytics**: Plotly + Dash
+- **Container**: Docker Compose + Kubernetes ready
 
 ### ✨ **Novas Funcionalidades:**
 
