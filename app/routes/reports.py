@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, BackgroundTasks
 from sqlalchemy.orm import Session
 from core.database import get_db
-from core.security import get_current_user
+from routes.auth import get_current_user
 from models.user import User
 from schemas.reports import ReportRequest, ReportStatus, DashboardV2
 from services.dashboard import DashboardService
