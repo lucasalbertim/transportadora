@@ -49,7 +49,7 @@ cd tms
 ### 2. Execute com Docker Compose
 
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 
 ### 3. Execute o setup do banco
@@ -182,34 +182,34 @@ Acesse: http://localhost:8000/redoc
 ### Docker
 ```bash
 # Iniciar serviços
-docker-compose up -d
+docker compose up -d
 
 # Parar serviços
-docker-compose down
+docker compose down
 
 # Ver logs
-docker-compose logs -f app
+docker compose logs -f app
 
 # Executar comando no container
-docker-compose exec app python -c "print('Hello World')"
+docker compose exec app python -c "print('Hello World')"
 ```
 
 ### Migrações
 ```bash
 # Criar nova migração
-docker-compose exec app alembic revision --autogenerate -m "descrição"
+docker compose exec app alembic -c alembic.ini revision --autogenerate -m "descrição"
 
 # Aplicar migrações
-docker-compose exec app alembic upgrade head
+docker compose exec app alembic -c alembic.ini upgrade head
 
 # Reverter migração
-docker-compose exec app alembic downgrade -1
+docker compose exec app alembic -c alembic.ini downgrade -1
 ```
 
 ### Seed
 ```bash
 # Popular banco com dados iniciais
-docker-compose exec app python seed_database.py
+docker compose exec app python seed_database.py
 ```
 
 ## 🔒 Segurança

@@ -19,11 +19,11 @@ echo "✅ Docker e Docker Compose encontrados"
 
 # Parar containers existentes (se houver)
 echo "🛑 Parando containers existentes..."
-docker-compose down
+docker compose down
 
 # Construir e iniciar os serviços
 echo "🔨 Construindo e iniciando serviços..."
-docker-compose up -d --build
+docker compose up -d --build
 
 # Aguardar um pouco para o banco inicializar
 echo "⏳ Aguardando inicialização do banco de dados..."
