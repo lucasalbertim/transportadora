@@ -1,6 +1,24 @@
-# 🚛 TMS v3.0 - Multi-tenant Transport Management System
+# 🚛 TMS v3.0 - Sistema Multi-tenant de Transporte Completo
 
-Sistema Multi-tenant de Gerenciamento de Transporte (TMS) versão 3.0 desenvolvido com FastAPI, PostgreSQL, Celery, Redis, Elasticsearch e Docker.
+Sistema completo de Gerenciamento de Transporte (TMS) versão 3.0 com **Backend FastAPI** e **Frontend React**, desenvolvido como uma solução SaaS multi-tenant.
+
+## 🏗️ **Arquitetura Completa**
+
+```
+📦 TMS v3.0 - Sistema Completo
+├── 🐍 Backend (FastAPI + PostgreSQL)
+│   ├── app/                    # Código principal do backend
+│   ├── docker-compose.yml      # Orquestração de containers
+│   ├── Dockerfile              # Container do backend
+│   └── requirements.txt        # Dependências Python
+├── ⚛️ Frontend (React + Vite)
+│   ├── tms-frontend/           # Código do frontend
+│   ├── src/                    # Código fonte React
+│   └── package.json            # Dependências Node.js
+└── 📚 Documentação
+    ├── README.md               # Este arquivo
+    └── examples/               # Exemplos de uso
+```
 
 ## 🆕 **Novidades da Versão 3.0**
 
@@ -17,15 +35,13 @@ Sistema Multi-tenant de Gerenciamento de Transporte (TMS) versão 3.0 desenvolvi
    - Taxa de ocupação da frota
    - Custo médio por km rodado
    - Projeção de ganhos futuros
-   - Análise de viagens no prazo vs atrasadas
-   - Métricas de performance dos motoristas
+   - Análise de viagens atrasadas vs. no prazo
 
 3. **🔔 Sistema de Notificações**
    - Email via SendGrid
    - WhatsApp via Twilio
    - Alertas automáticos de status de viagens
    - Alertas de manutenção preventiva
-   - Alertas de documentos vencendo
 
 4. **📈 Dashboard Executivo Interativo**
    - Gráficos com Plotly/Dash
@@ -33,322 +49,293 @@ Sistema Multi-tenant de Gerenciamento de Transporte (TMS) versão 3.0 desenvolvi
    - Métricas em tempo real
    - Relatórios customizáveis
 
-5. **🔧 Melhorias Técnicas**
-   - Logging estruturado com ELK Stack
-   - Monitoramento com Prometheus + Grafana
-   - Rate limiting e cache
-   - Arquitetura preparada para Kubernetes
-   - Testes de integração
+5. **🎨 Frontend Moderno**
+   - React + Vite + TailwindCSS
+   - Interface responsiva e moderna
+   - Sidebar retrátil com navegação
+   - Gráficos interativos com Recharts
 
-### 🛠️ **Stack Tecnológica:**
-- **Backend**: FastAPI + SQLAlchemy + Alembic
-- **Database**: PostgreSQL com RLS
-- **Cache/Queue**: Redis + Celery
-- **Logging**: ELK Stack (Elasticsearch + Kibana)
-- **Monitoring**: Prometheus + Grafana
-- **Notifications**: SendGrid + Twilio
-- **Analytics**: Plotly + Dash
-- **Container**: Docker Compose + Kubernetes ready
+### 🛠️ **Stack Tecnológica Completa:**
 
-### ✨ **Novas Funcionalidades:**
+#### **Backend:**
+- **FastAPI** - API REST moderna
+- **PostgreSQL** - Banco de dados principal
+- **SQLAlchemy** - ORM avançado
+- **Redis** - Cache e filas
+- **Celery** - Tarefas em background
+- **JWT** - Autenticação segura
 
-1. **🔧 Manutenção de Veículos**
-   - CRUD completo de manutenções
-   - Tipos: Preventiva e Corretiva
-   - Relatórios de custos por veículo
-   - Controle de status (concluída/pendente)
+#### **Frontend:**
+- **React 18** - Biblioteca principal
+- **Vite** - Build tool e dev server
+- **TailwindCSS** - Framework CSS
+- **shadcn/ui** - Componentes UI
+- **Framer Motion** - Animações
+- **Recharts** - Gráficos interativos
 
-2. **💰 Gestão Financeira Avançada**
-   - Registro de custos reais (combustível, pedágios, diárias, outros)
-   - Controle de receita (valor do frete)
-   - Cálculo automático de lucratividade
-   - Relatórios financeiros detalhados
+#### **Infraestrutura:**
+- **Docker Compose** - Orquestração
+- **ELK Stack** - Logging estruturado
+- **Prometheus + Grafana** - Monitoramento
+- **Kubernetes Ready** - Escalabilidade
 
-3. **📊 Relatórios Avançados**
-   - Geração em background com Celery
-   - Formatos: JSON, Excel, PDF
-   - Filtros por cliente, motorista, período
-   - Status de progresso em tempo real
+## 🚀 **Como Executar o Sistema Completo**
 
-4. **📈 Dashboard Melhorado**
-   - Gráficos de lucratividade
-   - Ranking de clientes mais rentáveis
-   - Ranking de motoristas mais eficientes
-   - Custos de manutenção vs receita
+### **Opção 1: Backend + Frontend Separados**
 
-### 🛠️ **Melhorias Técnicas:**
-- **Celery + Redis** para tarefas em background
-- **Testes unitários** com pytest
-- **Relatórios assíncronos** com progresso
-- **Métricas financeiras** avançadas
-- **API mais robusta** e escalável
-
-## 🎯 Sobre o Projeto
-
-Este é um MVP de um sistema TMS completo para transportadoras, incluindo:
-
-- **Autenticação JWT** com diferentes níveis de acesso (admin/operador)
-- **Cadastros básicos**: Clientes, Motoristas, Veículos e Rotas
-- **Gestão de viagens** com controle de status e custos
-- **Dashboard** com métricas e estatísticas
-- **API REST** documentada com Swagger
-- **Banco PostgreSQL** com migrações Alembic
-- **Cache Redis** para sessões
-- **Docker Compose** para fácil deploy
-
-## 🏗️ Arquitetura
-
-```
-TMS/
-├── app/
-│   ├── core/           # Configurações e utilitários
-│   ├── models/         # Modelos SQLAlchemy
-│   ├── schemas/        # Schemas Pydantic
-│   ├── routes/         # Endpoints da API
-│   ├── services/       # Lógica de negócio
-│   └── utils/          # Utilitários
-├── alembic/            # Migrações do banco
-├── docker-compose.yml  # Orquestração dos serviços
-├── Dockerfile          # Imagem da aplicação
-└── requirements.txt    # Dependências Python
-```
-
-## 🚀 Como Executar
-
-### Pré-requisitos
-
-- Docker e Docker Compose instalados
-- Git
-
-### 1. Clone o repositório
-
+#### **Backend (FastAPI):**
 ```bash
+# Clonar o repositório
 git clone <repository-url>
-cd tms
-```
+cd tms-backend
 
-### 2. Execute com Docker Compose
-
-```bash
-docker compose up -d
-```
-
-### 3. Execute o setup do banco
-
-```bash
-./setup.sh
-```
-
-**Ou execute tudo de uma vez:**
-
-```bash
+# Executar com Docker
 ./init.sh
+
+# Acessar API
+http://localhost:8000/docs
 ```
 
-## 📊 Serviços Disponíveis
+#### **Frontend (React):**
+```bash
+# Navegar para o frontend
+cd tms-frontend
+
+# Instalar dependências
+npm install
+
+# Executar em desenvolvimento
+npm run dev
+
+# Acessar interface
+http://localhost:5173
+```
+
+### **Opção 2: Docker Compose Completo (Recomendado)**
+
+```bash
+# Executar todo o sistema
+docker-compose up -d
+
+# Acessar serviços:
+# Backend API: http://localhost:8000
+# Frontend: http://localhost:3000
+# PostgreSQL: localhost:5432
+# Redis: localhost:6379
+# Prometheus: http://localhost:9090
+# Grafana: http://localhost:3000
+# Kibana: http://localhost:5601
+```
+
+## 📁 **Estrutura Detalhada do Projeto**
+
+### **Backend (`/app/`)**
+```
+app/
+├── core/                    # Configurações e utilitários
+│   ├── config.py           # Configurações da aplicação
+│   ├── database.py         # Conexão com banco
+│   ├── security.py         # Autenticação JWT
+│   ├── tenant.py           # Sistema multi-tenant
+│   └── logging.py          # Logging estruturado
+├── models/                  # Modelos SQLAlchemy
+│   ├── tenant.py           # Modelo de tenant
+│   ├── user.py             # Usuários
+│   ├── client.py           # Clientes
+│   ├── driver.py           # Motoristas
+│   ├── vehicle.py          # Veículos
+│   ├── route.py            # Rotas
+│   ├── trip.py             # Viagens
+│   └── maintenance.py      # Manutenções
+├── schemas/                 # Schemas Pydantic
+├── services/                # Lógica de negócio
+├── routes/                  # Endpoints da API
+├── tasks/                   # Tarefas Celery
+└── utils/                   # Utilitários
+```
+
+### **Frontend (`/tms-frontend/`)**
+```
+tms-frontend/
+├── src/
+│   ├── components/          # Componentes React
+│   │   ├── ui/             # Componentes base (shadcn/ui)
+│   │   ├── Sidebar.jsx     # Navegação lateral
+│   │   └── Header.jsx      # Cabeçalho
+│   ├── pages/              # Páginas da aplicação
+│   │   ├── Login.jsx       # Autenticação
+│   │   ├── Dashboard.jsx   # Dashboard principal
+│   │   └── Clients.jsx     # Gestão de clientes
+│   ├── layouts/            # Layouts
+│   ├── hooks/              # Custom hooks
+│   ├── services/           # Serviços de API
+│   └── utils/              # Utilitários
+├── public/                 # Arquivos estáticos
+└── package.json            # Dependências
+```
+
+## 🎯 **Funcionalidades por Módulo**
+
+### **🔐 Autenticação e Usuários**
+- ✅ Login/Logout com JWT
+- ✅ Controle de permissões (admin/operador)
+- ✅ Sistema multi-tenant
+- ✅ Interface de login responsiva
+
+### **📋 Cadastros Básicos**
+- ✅ **Clientes**: CRUD completo com interface
+- ✅ **Motoristas**: CRUD completo
+- ✅ **Veículos**: CRUD completo
+- ✅ **Rotas**: CRUD completo
+
+### **🚛 Operação**
+- ✅ **Viagens**: Registro e acompanhamento
+- ✅ **Custos**: Gestão financeira
+- ✅ **Status**: Atualização em tempo real
+- ✅ **Dashboard**: Visão geral operacional
+
+### **🔧 Manutenção**
+- ✅ **Veículos**: Agendamento e controle
+- ✅ **Alertas**: Notificações automáticas
+- ✅ **Relatórios**: Custos por veículo
+
+### **📊 Relatórios e Analytics**
+- ✅ **Financeiros**: Receita vs Custos
+- ✅ **Operacionais**: KPIs de performance
+- ✅ **Gráficos**: Interativos e responsivos
+- ✅ **Exportação**: PDF/Excel
+
+### **⚙️ Configurações**
+- ✅ **Usuários**: Gestão de acessos
+- ✅ **Perfil**: Configurações pessoais
+- ✅ **Tenant**: Configurações da empresa
+
+## 🔗 **Integração Backend ↔ Frontend**
+
+### **API Endpoints Principais:**
+```
+POST   /api/v1/auth/login          # Autenticação
+GET    /api/v1/dashboard           # Dashboard
+GET    /api/v1/clients             # Listar clientes
+POST   /api/v1/clients             # Criar cliente
+PUT    /api/v1/clients/{id}        # Atualizar cliente
+DELETE /api/v1/clients/{id}        # Deletar cliente
+GET    /api/v1/analytics/*         # Analytics e KPIs
+```
+
+### **Headers de Autenticação:**
+```javascript
+// Frontend envia:
+{
+  'Authorization': 'Bearer <jwt_token>',
+  'X-Tenant-ID': 'tenant_slug'
+}
+```
+
+## 📊 **Serviços Disponíveis**
 
 | Serviço | Porta | Descrição |
 |---------|-------|-----------|
 | **FastAPI** | 8000 | API principal |
+| **React Frontend** | 5173 | Interface web |
 | **PostgreSQL** | 5432 | Banco de dados |
-| **Redis** | 6379 | Cache e sessões |
-| **pgAdmin** | 5050 | Interface web do PostgreSQL |
+| **Redis** | 6379 | Cache e filas |
+| **Celery** | - | Worker de tarefas |
+| **Elasticsearch** | 9200 | Logs estruturados |
+| **Kibana** | 5601 | Visualização de logs |
+| **Prometheus** | 9090 | Métricas |
+| **Grafana** | 3000 | Dashboards |
+| **pgAdmin** | 5050 | Interface PostgreSQL |
 
-## 🔐 Credenciais Padrão
+## 🚀 **Deploy e Produção**
 
-### Usuários do Sistema
-- **Admin**: `admin` / `admin123`
-- **Operador**: `operador` / `operador123`
-
-### PostgreSQL
-- **Host**: `localhost:5432`
-- **Database**: `tms_db`
-- **User**: `tms_user`
-- **Password**: `tms_password`
-
-### pgAdmin
-- **URL**: `http://localhost:5050`
-- **Email**: `admin@tms.com`
-- **Password**: `admin123`
-
-## 📚 Documentação da API
-
-### Swagger UI
-Acesse: http://localhost:8000/docs
-
-### ReDoc
-Acesse: http://localhost:8000/redoc
-
-## 🔌 Endpoints Principais
-
-### Autenticação
-- `POST /api/v1/auth/register` - Cadastrar usuário
-- `POST /api/v1/auth/login` - Fazer login
-- `GET /api/v1/auth/me` - Dados do usuário logado
-
-### Clientes
-- `GET /api/v1/clients` - Listar clientes
-- `POST /api/v1/clients` - Criar cliente
-- `GET /api/v1/clients/{id}` - Buscar cliente
-- `PUT /api/v1/clients/{id}` - Atualizar cliente
-- `DELETE /api/v1/clients/{id}` - Deletar cliente
-
-### Motoristas
-- `GET /api/v1/drivers` - Listar motoristas
-- `POST /api/v1/drivers` - Criar motorista
-- `GET /api/v1/drivers/{id}` - Buscar motorista
-- `PUT /api/v1/drivers/{id}` - Atualizar motorista
-- `DELETE /api/v1/drivers/{id}` - Deletar motorista
-
-### Veículos
-- `GET /api/v1/vehicles` - Listar veículos
-- `POST /api/v1/vehicles` - Criar veículo
-- `GET /api/v1/vehicles/{id}` - Buscar veículo
-- `PUT /api/v1/vehicles/{id}` - Atualizar veículo
-- `DELETE /api/v1/vehicles/{id}` - Deletar veículo
-
-### Rotas
-- `GET /api/v1/routes` - Listar rotas
-- `POST /api/v1/routes` - Criar rota
-- `GET /api/v1/routes/{id}` - Buscar rota
-- `PUT /api/v1/routes/{id}` - Atualizar rota
-- `DELETE /api/v1/routes/{id}` - Deletar rota
-
-### Viagens
-- `GET /api/v1/trips` - Listar viagens
-- `POST /api/v1/trips` - Criar viagem
-- `GET /api/v1/trips/{id}` - Buscar viagem
-- `PUT /api/v1/trips/{id}` - Atualizar viagem
-- `PATCH /api/v1/trips/{id}/status` - Atualizar status
-- `DELETE /api/v1/trips/{id}` - Deletar viagem
-
-### Dashboard
-- `GET /api/v1/dashboard` - Dashboard básico
-- `GET /api/v1/reports/dashboard/v2` - Dashboard avançado v2.0
-
-### 🔧 Manutenções (Novo!)
-- `GET /api/v1/maintenance` - Listar manutenções
-- `POST /api/v1/maintenance` - Criar manutenção
-- `GET /api/v1/maintenance/{id}` - Buscar manutenção
-- `PUT /api/v1/maintenance/{id}` - Atualizar manutenção
-- `DELETE /api/v1/maintenance/{id}` - Deletar manutenção
-- `GET /api/v1/maintenance/reports/costs-by-vehicle` - Relatório de custos
-
-### 📊 Relatórios (Novo!)
-- `POST /api/v1/reports/generate` - Solicitar relatório
-- `GET /api/v1/reports/status/{task_id}` - Verificar status
-- `GET /api/v1/dashboard/stats` - Estatísticas gerais
-
-## 🔧 Desenvolvimento
-
-### Estrutura de Dados
-
-#### Usuários
-- Email, username, senha, nome completo
-- Roles: ADMIN, OPERATOR
-
-#### Clientes
-- Nome, CNPJ/CPF, contato, endereço completo
-
-#### Motoristas
-- Nome, CNH, vencimento CNH, telefone, endereço
-
-#### Veículos
-- Placa, modelo, marca, ano, capacidade, tipo de combustível
-
-#### Rotas
-- Nome, origem, destino, distância estimada, tempo estimado
-
-#### Viagens
-- Cliente, motorista, veículo, rota
-- Datas de saída e chegada
-- Status: planned, in_transit, completed, cancelled
-- Custos estimados e reais
-
-### Status das Viagens
-
-1. **Planejada** - Viagem criada, aguardando início
-2. **Em Trânsito** - Viagem iniciada, em andamento
-3. **Concluída** - Viagem finalizada com sucesso
-4. **Cancelada** - Viagem cancelada
-
-## 🛠️ Comandos Úteis
-
-### Docker
+### **Desenvolvimento:**
 ```bash
-# Iniciar serviços
-docker compose up -d
+# Backend
+./init.sh
 
-# Parar serviços
-docker compose down
-
-# Ver logs
-docker compose logs -f app
-
-# Executar comando no container
-docker compose exec app python -c "print('Hello World')"
+# Frontend
+cd tms-frontend && npm run dev
 ```
 
-### Migrações
+### **Produção:**
 ```bash
-# Criar nova migração
-docker compose exec app alembic -c alembic.ini revision --autogenerate -m "descrição"
+# Build completo
+docker-compose -f docker-compose.prod.yml up -d
 
-# Aplicar migrações
-docker compose exec app alembic -c alembic.ini upgrade head
-
-# Reverter migração
-docker compose exec app alembic -c alembic.ini downgrade -1
+# Ou Kubernetes
+kubectl apply -f k8s/
 ```
 
-### Seed
-```bash
-# Popular banco com dados iniciais
-docker compose exec app python seed_database.py
-```
+## 📈 **Monitoramento e Observabilidade**
 
-## 🔒 Segurança
+- **Logs**: ELK Stack (Elasticsearch + Kibana)
+- **Métricas**: Prometheus + Grafana
+- **Tracing**: Preparado para Jaeger
+- **Health Checks**: Endpoints de saúde
 
-- **JWT Tokens** para autenticação
-- **Senhas criptografadas** com bcrypt
-- **Controle de acesso** baseado em roles
-- **Validação de dados** com Pydantic
-- **CORS configurado** para desenvolvimento
+## 🔮 **Roadmap Futuro**
 
-## 📈 Dashboard
+### **v3.1 - Melhorias**
+- [ ] App mobile para motoristas
+- [ ] Integração com ERPs
+- [ ] Machine Learning para predições
+- [ ] WebSocket para real-time
 
-O dashboard fornece:
+### **v3.2 - Escalabilidade**
+- [ ] Kubernetes deployment
+- [ ] Microserviços
+- [ ] API Gateway
+- [ ] Service Mesh
 
-- Total de viagens por status
-- Contadores de cadastros (clientes, motoristas, veículos, rotas)
-- Custos totais estimados vs reais
-- Lista das viagens mais recentes
+### **v3.3 - Inteligência**
+- [ ] IA para otimização de rotas
+- [ ] Predição de demandas
+- [ ] Análise preditiva
+- [ ] Chatbot integrado
 
-## 🚀 Próximos Passos
-
-- [ ] Interface web (Frontend)
-- [ ] Notificações em tempo real
-- [ ] Relatórios avançados
-- [ ] Integração com GPS
-- [ ] Módulo financeiro
-- [ ] API para aplicativos móveis
-
-## 🤝 Contribuição
+## 🤝 **Contribuição**
 
 1. Fork o projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
-3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
-4. Push para a branch (`git push origin feature/AmazingFeature`)
+2. Crie uma branch para sua feature
+3. Commit suas mudanças
+4. Push para a branch
 5. Abra um Pull Request
 
-## 📄 Licença
+## 📄 **Licença**
 
-Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalhes.
+Este projeto é parte do sistema TMS v3.0 - Multi-tenant SaaS.
 
-## 📞 Suporte
+## 📞 **Suporte**
 
-Para dúvidas ou suporte, entre em contato através dos issues do GitHub.
+- **Documentação**: `/docs`
+- **API Docs**: `http://localhost:8000/docs`
+- **Issues**: GitHub Issues
+- **Email**: suporte@tms.com
 
 ---
 
-**Desenvolvido com ❤️ para o setor logístico**
+## 🎉 **Status do Projeto**
+
+### ✅ **Completo:**
+- Backend FastAPI com multi-tenant
+- Frontend React moderno
+- Sistema de autenticação
+- Dashboard interativo
+- CRUD completo
+- Analytics avançados
+- Notificações
+- Monitoramento
+
+### 🚀 **Pronto para Produção:**
+- Docker Compose configurado
+- Logging estruturado
+- Métricas e monitoramento
+- Documentação completa
+- Testes preparados
+
+**O TMS v3.0 está completo e pronto para uso em produção! 🎉**
+
+---
+
+**Desenvolvido com ❤️ para o setor de transporte**

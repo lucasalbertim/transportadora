@@ -133,9 +133,15 @@ dmypy.json
 .idea/
 *.swp
 *.swo
+*~
 
 # OS
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
 Thumbs.db
 
 # Docker
@@ -143,12 +149,52 @@ Thumbs.db
 
 # Database
 *.db
-*.sqlite3
+*.sqlite
 
 # Logs
 logs/
 *.log
 
-# Temporary files
-tmp/
-temp/
+# Node.js (Frontend)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Frontend build
+tms-frontend/dist/
+tms-frontend/build/
+
+# Frontend environment
+tms-frontend/.env
+tms-frontend/.env.local
+tms-frontend/.env.development.local
+tms-frontend/.env.test.local
+tms-frontend/.env.production.local
+
+# Frontend cache
+tms-frontend/.cache/
+tms-frontend/.parcel-cache/
+
+# Frontend IDE
+tms-frontend/.vscode/
+tms-frontend/.idea/
+
+# Frontend OS
+tms-frontend/.DS_Store
+tms-frontend/Thumbs.db
+
+# Monitoring
+monitoring/data/
+monitoring/logs/
+
+# Elasticsearch
+elasticsearch_data/
+
+# Grafana
+grafana_data/
+
+# PostgreSQL
+postgres_data/
