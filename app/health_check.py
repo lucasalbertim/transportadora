@@ -55,8 +55,9 @@ def test_database_connection():
     
     try:
         from core.database import engine
+        from sqlalchemy import text
         with engine.connect() as conn:
-            result = conn.execute("SELECT 1")
+            result = conn.execute(text("SELECT 1"))
             print("✅ Conexão com banco - OK")
         return True
     except Exception as e:
@@ -70,6 +71,7 @@ def test_tables_exist():
     try:
         from core.database import engine
         from models import Base
+        from sqlalchemy import text
         
         # Criar tabelas se não existirem
         Base.metadata.create_all(bind=engine)
@@ -79,7 +81,7 @@ def test_tables_exist():
         with engine.connect() as conn:
             tables = ['users', 'clients', 'drivers', 'vehicles', 'routes', 'trips']
             for table in tables:
-                result = conn.execute(f"SELECT COUNT(*) FROM {table}")
+                result = conn.execute(text(f"SELECT COUNT(*) FROM {table}"))
                 print(f"✅ Tabela {table} - OK")
         
         return True
