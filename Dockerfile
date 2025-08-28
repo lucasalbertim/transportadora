@@ -5,6 +5,7 @@ WORKDIR /app
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
     gcc \
+    postgresql-client \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements first for better caching
@@ -13,6 +14,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application code
 COPY ./app .
+COPY alembic.ini .
+COPY seed_database.py .
+COPY wait-for-db.sh .
 
 # Create non-root user
 RUN useradd -m -u 1000 appuser && chown -R appuser:appuser /app

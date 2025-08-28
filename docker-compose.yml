@@ -12,12 +12,15 @@ services:
       - ALGORITHM=HS256
       - ACCESS_TOKEN_EXPIRE_MINUTES=30
     depends_on:
-      - db
-      - redis
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
     volumes:
       - ./app:/app
     networks:
       - tms-network
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 
   db:
     image: postgres:15
@@ -31,6 +34,11 @@ services:
       - postgres_data:/var/lib/postgresql/data
     networks:
       - tms-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U tms_user -d tms_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   redis:
     image: redis:7-alpine

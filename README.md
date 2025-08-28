@@ -52,16 +52,16 @@ cd tms
 docker-compose up -d
 ```
 
-### 3. Execute as migrações (opcional)
+### 3. Execute o setup do banco
 
 ```bash
-docker-compose exec app alembic upgrade head
+./setup.sh
 ```
 
-### 4. Popule com dados iniciais (opcional)
+**Ou execute tudo de uma vez:**
 
 ```bash
-docker-compose exec app python seed_database.py
+./init.sh
 ```
 
 ## 📊 Serviços Disponíveis

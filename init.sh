@@ -29,13 +29,9 @@ docker-compose up -d --build
 echo "⏳ Aguardando inicialização do banco de dados..."
 sleep 10
 
-# Executar migrações
-echo "📊 Executando migrações do banco..."
-docker-compose exec -T app alembic upgrade head
-
-# Executar seed
-echo "🌱 Populando banco com dados iniciais..."
-docker-compose exec -T app python seed_database.py
+# Executar setup
+echo "🔧 Executando setup do banco..."
+./setup.sh
 
 echo ""
 echo "🎉 TMS iniciado com sucesso!"
