@@ -56,7 +56,8 @@
 
 @layer base {
   * {
-    @apply border-border;
+    /* Avoid Tailwind unknown utility; set border color directly */
+    border-color: hsl(var(--border));
   }
   body {
     @apply bg-background text-foreground;
