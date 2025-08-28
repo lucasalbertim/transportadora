@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from typing import Optional
 from datetime import datetime
-from ..models.trip import TripStatus
+from models.trip import TripStatus
 
 
 class TripBase(BaseModel):

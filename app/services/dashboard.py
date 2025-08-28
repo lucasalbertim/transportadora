@@ -1,11 +1,11 @@
 from sqlalchemy.orm import Session
 from sqlalchemy import func
-from ..models.trip import Trip, TripStatus
-from ..models.client import Client
-from ..models.driver import Driver
-from ..models.vehicle import Vehicle
-from ..models.route import Route
-from ..schemas.dashboard import DashboardStats
+from models.trip import Trip, TripStatus
+from models.client import Client
+from models.driver import Driver
+from models.vehicle import Vehicle
+from models.route import Route
+from schemas.dashboard import DashboardStats
 
 
 class DashboardService:

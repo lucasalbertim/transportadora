@@ -1,11 +1,11 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from typing import List
-from ..core.database import get_db
-from ..routes.auth import get_current_user
-from ..models.user import User
-from ..models.route import Route
-from ..schemas.route import RouteCreate, RouteUpdate, Route as RouteSchema
+from core.database import get_db
+from routes.auth import get_current_user
+from models.user import User
+from models.route import Route
+from schemas.route import RouteCreate, RouteUpdate, Route as RouteSchema
 
 router = APIRouter(prefix="/routes", tags=["routes"])
 

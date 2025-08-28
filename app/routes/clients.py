@@ -1,11 +1,11 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from typing import List
-from ..core.database import get_db
-from ..routes.auth import get_current_user
-from ..models.user import User
-from ..models.client import Client
-from ..schemas.client import ClientCreate, ClientUpdate, Client as ClientSchema
+from core.database import get_db
+from routes.auth import get_current_user
+from models.user import User
+from models.client import Client
+from schemas.client import ClientCreate, ClientUpdate, Client as ClientSchema
 
 router = APIRouter(prefix="/clients", tags=["clients"])
 

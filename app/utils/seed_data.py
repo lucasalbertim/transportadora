@@ -1,10 +1,10 @@
 from sqlalchemy.orm import Session
-from ..core.security import get_password_hash
-from ..models.user import User, UserRole
-from ..models.client import Client
-from ..models.driver import Driver
-from ..models.vehicle import Vehicle
-from ..models.route import Route
+from core.security import get_password_hash
+from models.user import User, UserRole
+from models.client import Client
+from models.driver import Driver
+from models.vehicle import Vehicle
+from models.route import Route
 from datetime import date, datetime, timedelta
 
 

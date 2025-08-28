@@ -1,9 +1,9 @@
 from sqlalchemy.orm import Session
 from datetime import timedelta
-from ..core.security import verify_password, get_password_hash, create_access_token
-from ..core.config import settings
-from ..models.user import User
-from ..schemas.user import UserCreate, UserLogin
+from core.security import verify_password, get_password_hash, create_access_token
+from core.config import settings
+from models.user import User
+from schemas.user import UserCreate, UserLogin
 
 
 class AuthService:

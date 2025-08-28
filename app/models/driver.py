@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, DateTime, Date, Boolean
 from sqlalchemy.sql import func
-from ..core.database import Base
+from core.database import Base
 
 
 class Driver(Base):
